@@ -26,25 +26,25 @@
                     <p><b>Try it free 7 days</b> then $20/mo, thereafter</p>
                 </div>
                 <div class="sd-2">
-                    <form action="" class="signup-form" name="signup" method="post" autocomplete="off">
+                    <form action="" class="signup-form" name="signup" onsubmit="return validateForm()" method="post" autocomplete="off">
                         <div class="input-div">
-                            <input type="text" class="input-box" name="firstname" id="firstname" placeholder="First Name">
-                            <img class="error-icon" src="assets/images/icon-error.svg" alt="!">
+                            <input type="text" class="input-box" name="firstname" id="firstname" placeholder="First Name" oninput="enableBtn(firstname)" onkeyup="removeAlert(firstname)">
+                            <img class="error-icon" id="firstname-icon" hidden src="assets/images/icon-error.svg" alt="!">
                             <p class="errormsg" id="error-firstname"></p>
                         </div>
                         <div class="input-div">
-                            <input type="text" class="input-box" name="lastname" id="last name" placeholder="Last Name">
-                            <img class="error-icon" src="assets/images/icon-error.svg" alt="!">
+                            <input type="text" class="input-box" name="lastname" id="lastname" placeholder="Last Name" oninput="enableBtn(lastname)" onkeyup="removeAlert(lastname)">
+                            <img class="error-icon" id="lastname-icon" hidden src="assets/images/icon-error.svg" alt="!">
                             <p class="errormsg" id="error-lastname"></p>
                         </div>
                         <div class="input-div">
-                            <input type="email" class="input-box" name="email" id="email" placeholder="Email Address">
-                            <img class="error-icon" src="assets/images/icon-error.svg" alt="!">
+                            <input type="email" class="input-box" name="email" id="email" placeholder="Email Address" oninput="enableBtn(email)" onkeyup="removeAlert(email)">
+                            <img class="error-icon" id="email-icon" hidden src="assets/images/icon-error.svg" alt="!">
                             <p class="errormsg" id="error-email"></p>
                         </div>
                         <div class="input-div">
-                            <input type="password" class="input-box" name="password" id="password" placeholder="Password">
-                            <img class="error-icon" src="assets/images/icon-error.svg" alt="!">
+                            <input type="password" class="input-box" name="password" id="password" placeholder="Password" oninput="enableBtn(password)" onkeyup="removeAlert(password)">
+                            <img class="error-icon" id="password-icon" hidden src="assets/images/icon-error.svg" alt="!">
                             <p class="errormsg" id="error-password"></p>
                         </div>
                         <div class="input-div btn-div">
@@ -60,5 +60,174 @@
             </div>
         </div>
     </main>
+
+    <script type="text/javascript">
+
+        function enableBtn(val){
+            //Declaring the Requied Variables
+            let firstname = document.forms["signup"]["firstname"].value;
+            let lastname = document.forms["signup"]["lastname"].value;
+            let email = document.forms["signup"]["email"].value;
+            let password = document.forms["signup"]["password"].value;
+
+            document.getElementById(val.id).addEventListener("oninput", activeBtn(val));
+            if(firstname == ""){
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+            } else if(lastname == ""){
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+            } else if(email == ""){
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+            } else if(password == ""){
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+            }
+            function activeBtn(val){
+                if(val.value == ""){
+                    //Disable Submit Button
+                    document.getElementById("submit").disabled = true;
+                    document.getElementById(val.id).classList.add("error-input");
+                    document.getElementById(val.id+'-icon').hidden = false;
+                    document.getElementById("error-"+val.id).hidden = false;
+                    document.getElementById("error-"+val.id).innerHTML ="Feild cannot be empty";
+                } else{
+                    //Enable Submit Button
+                    document.getElementById("submit").disabled = false;
+                }                
+            }
+        }
+        
+        //Function to Validate Form
+        function validateForm(){
+            //Declaring the Required Variables
+            let firstname = document.forms["signup"]["firstname"].value;
+            let lastname = document.forms["signup"]["lastname"].value;
+            let email = document.forms["signup"]["email"].value;
+            let password = document.forms["signup"]["password"].value;
+
+            //Setting Condition for Script to Run
+            if(firstname == "" && lastname == "" && email == "" && password == ""){
+                //Sending Error Message
+                document.getElementById("error-firstname").innerHTML ="First Name cannot be empty";
+                document.getElementById("error-lastname").innerHTML ="Last Name cannot be empty";
+                document.getElementById("error-email").innerHTML ="Email cannot be empty";
+                document.getElementById("error-password").innerHTML ="Password cannot be empty";
+                //Activating the Caution Icon
+                document.getElementById("firstname-icon").hidden = false;
+                document.getElementById("lastname-icon").hidden = false;
+                document.getElementById("email-icon").hidden = false;
+                document.getElementById("password-icon").hidden = false;
+                //Invoking the Red Alert
+                document.getElementById("firstname").classList.add("error-input");
+                document.getElementById("lastname").classList.add("error-input");
+                document.getElementById("email").classList.add("error-input");
+                document.getElementById("password").classList.add("error-input");
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+                //Setting Placeholder for Email Input
+                document.getElementById("email").placeholder = "email@example/com";
+                return false;
+            } else if(lastname == "" && email == "" && password == ""){
+                //Sending Error Message
+                document.getElementById("error-lastname").innerHTML ="Last Name cannot be empty";
+                document.getElementById("error-email").innerHTML ="Email cannot be empty";
+                document.getElementById("error-password").innerHTML ="Password cannot be empty";
+                //Activating the Caution Icon
+                document.getElementById("lastname-icon").hidden = false;
+                document.getElementById("email-icon").hidden = false;
+                document.getElementById("password-icon").hidden = false;
+                //Invoking the Red Alert
+                document.getElementById("lastname").classList.add("error-input");
+                document.getElementById("email").classList.add("error-input");
+                document.getElementById("password").classList.add("error-input");
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+                //Setting Placeholder for Email Input
+                document.getElementById("email").placeholder = "email@example/com";
+                return false;
+            } else if(email == "" && password == ""){
+                //Sending Error Message
+                document.getElementById("error-email").innerHTML ="Email cannot be empty";
+                document.getElementById("error-password").innerHTML ="Password cannot be empty";
+                //Activating the Caution Icon
+                document.getElementById("email-icon").hidden = false;
+                document.getElementById("password-icon").hidden = false;
+                //Invoking the Red Alert
+                document.getElementById("email").classList.add("error-input");
+                document.getElementById("password").classList.add("error-input");
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+                //Setting Placeholder for Email Input
+                document.getElementById("email").placeholder = "email@example/com";
+                return false;
+            } else if(password == ""){
+                document.getElementById("error-password").innerHTML ="Password cannot be empty";
+                document.getElementById("password-icon").hidden = false;
+                document.getElementById("password").classList.add("error-input");
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;
+                return false;
+            } else if(email = ""){
+                document.getElementById("error-email").innerHTML ="Email cannot be empty";
+                document.getElementById("email-icon").hidden = false;
+                document.getElementById("email").classList.add("error-input");
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true; 
+                //Setting Placeholder for Email Input
+                document.getElementById("email").placeholder = "email@example/com";               
+            } else if(lastname = ""){
+                document.getElementById("error-lastname").innerHTML ="Last Name cannot be empty";
+                document.getElementById("lastname-icon").hidden = false;
+                document.getElementById("lastname").classList.add("error-input");
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;               
+            } else if(firstname = ""){
+                document.getElementById("error-firstname").innerHTML ="First Name cannot be empty";
+                document.getElementById("firstname-icon").hidden = false;
+                document.getElementById("firstname").classList.add("error-input");
+                //Disable Submit Button
+                document.getElementById("submit").disabled = true;                
+            }
+        }
+
+        //Function to Remove Error Alerts
+        function removeAlert(val){
+
+            document.getElementById(val.id).addEventListener("keyup", removal(val));
+            function removal(val){
+
+                //Function for First Name
+                if(val.name == "firstname" && val.value != ""){
+                    document.getElementById("error-firstname").hidden = true;
+                    document.getElementById("firstname-icon").hidden = true;
+                    document.getElementById("firstname").classList.remove("error-input");
+                }
+
+                //Function for Last Name
+                if(val.name == "lastname" && val.value != ""){
+                    document.getElementById("error-lastname").hidden = true;
+                    document.getElementById("lastname-icon").hidden = true;
+                    document.getElementById("lastname").classList.remove("error-input");
+                }
+
+                //Function for Email
+                if(val.name == "email" && val.value != ""){
+                    document.getElementById("error-email").hidden = true;
+                    document.getElementById("email-icon").hidden = true;
+                    document.getElementById("email").classList.remove("error-input");
+                }
+
+                //Function for Password
+                if(val.name == "password" && val.value != ""){
+                    document.getElementById("error-password").hidden = true;
+                    document.getElementById("password-icon").hidden = true;
+                    document.getElementById("password").classList.remove("error-input");
+                }
+            }
+        }
+
+    </script>
 </body>
 </html>

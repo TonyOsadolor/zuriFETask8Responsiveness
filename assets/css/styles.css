@@ -140,6 +140,10 @@ body{
     font-size: 12px;
     color: red;
 }
+
+.error-input{
+    border: 2px solid red!important;
+}
 /* Stylings for index.html Page */
 
 /* Stylings for Mobile View */
